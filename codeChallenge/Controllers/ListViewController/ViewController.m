@@ -72,21 +72,30 @@ NSString *const FlickrAPIKey = @"2ed35a9f4fda03bc96e73dbd03602780";
     NSString *urlString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&per_page=15&format=json&nojsoncallback=1&extras=date_taken,description,tags", FlickrAPIKey, @"cooking"];
     NSLog(@"%@", urlString);
     
-    NSURL *URL = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    NSURLResponse *response = nil;
-    NSError *error = nil;
+//    NSURL *URL = [NSURL URLWithString:urlString];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+//    NSURLResponse *response = nil;
+//    NSError *error = nil;
+//
+//    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+//
+//    if (!error) {
+//        NSDictionary *photosDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+//        self.photos = [[photosDictionary objectForKey:@"photos"] objectForKey:@"photo"];
+//
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.tableView reloadData];
+//        });
+//    }
     
-    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
     
-    if (!error) {
-        NSDictionary *photosDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        self.photos = [[photosDictionary objectForKey:@"photos"] objectForKey:@"photo"];
+    //[APIManager.sharedInstance getFlickrPhotosWithCompletionWithSuccess:^(NSArray<FoodModel *> _Nonnull) completionWithFail:<#^(NSError * _Nonnull)completionWithFail#>]
+    
+    [APIManager.sharedInstance getFlickrPhotosWithCompletionWithSuccess:^(NSArray<FoodModel *>* food) {
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
-    }
+    } completionWithFail:^ (NSError* error){
+        
+    }];
 }
 
 

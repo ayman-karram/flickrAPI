@@ -12,4 +12,5 @@ class FoodModel: NSObject ,Codable {
 
     let title : String = ""
     let descriptionText : String = ""
+    
 }

@@ -15,6 +15,7 @@
 		3E15BBF2208754FE0029597E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E15BBF1208754FE0029597E /* main.m */; };
 		3E15BBFA208774B10029597E /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E15BBF9208774B10029597E /* CustomCell.m */; };
 		3E15BBFC20879B4B0029597E /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E15BBFB20879B4B0029597E /* CustomCell.xib */; };
+		5E139AEA20A0AE3400F14143 /* RequestsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E139AE920A0AE3400F14143 /* RequestsManager.swift */; };
 		D338FE0D209F51C800DF2F49 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338FE0C209F51C800DF2F49 /* APIManager.swift */; };
 		D338FE10209F751000DF2F49 /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338FE0F209F751000DF2F49 /* FoodModel.swift */; };
 /* End PBXBuildFile section */
@@ -33,6 +34,7 @@
 		3E15BBF8208774B10029597E /* CustomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		3E15BBF9208774B10029597E /* CustomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
 		3E15BBFB20879B4B0029597E /* CustomCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
+		5E139AE920A0AE3400F14143 /* RequestsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsManager.swift; sourceTree = "<group>"; };
 		D338FE0B209F51C700DF2F49 /* codeChallenge-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "codeChallenge-Bridging-Header.h"; sourceTree = "<group>"; };
 		D338FE0C209F51C800DF2F49 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		D338FE0F209F751000DF2F49 /* FoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
@@ -86,7 +88,6 @@
 			isa = PBXGroup;
 			children = (
 				D338FE08209F45C000DF2F49 /* ListViewController */,
-				D338FE09209F45DB00DF2F49 /* DetailsViewController */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -127,17 +128,11 @@
 			path = ListViewController;
 			sourceTree = "<group>";
 		};
-		D338FE09209F45DB00DF2F49 /* DetailsViewController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DetailsViewController;
-			sourceTree = "<group>";
-		};
 		D338FE0A209F460100DF2F49 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
 				D338FE0C209F51C800DF2F49 /* APIManager.swift */,
+				5E139AE920A0AE3400F14143 /* RequestsManager.swift */,
 				D338FE0B209F51C700DF2F49 /* codeChallenge-Bridging-Header.h */,
 			);
 			path = Managers;
@@ -219,6 +214,7 @@
 				3E15BBF2208754FE0029597E /* main.m in Sources */,
 				D338FE0D209F51C800DF2F49 /* APIManager.swift in Sources */,
 				D338FE10209F751000DF2F49 /* FoodModel.swift in Sources */,
+				5E139AEA20A0AE3400F14143 /* RequestsManager.swift in Sources */,
 				3E15BBFA208774B10029597E /* CustomCell.m in Sources */,
 				3E15BBE4208754FE0029597E /* AppDelegate.m in Sources */,
 			);
