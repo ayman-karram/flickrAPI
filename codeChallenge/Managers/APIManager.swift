@@ -11,17 +11,17 @@ import Foundation
 @objc class APIManager : NSObject {
     
     @objc static let sharedInstance = APIManager()
-    private static let APIKey = ""
+    private static let APIKey = "2ed35a9f4fda03bc96e73dbd03602780"
     
     struct URLS {
-        static let mainURL = "https://api.flickr.com/services"
-        static let photoSearch = mainURL + "services/rest/"
+        static let mainURL = "https://api.flickr.com"
+        static let photoSearch = mainURL + "/services/rest/"
     }
     
     @objc func getFlickrPhotos (completionWithSuccess:  @escaping ([FoodModel]) -> Void , completionWithFail : @escaping (Error) -> Void) {
-       
+     
         let url = URLS.photoSearch 
-        let paramters = ["method=":"flickr.photos.search" , "api_key" : APIManager.APIKey,"tags" : "cooking", "format" : "json", "nojsoncallback" : "1", "extras" : "date_taken,description,tags"]
+        let paramters = ["method":"flickr.photos.search" , "api_key" : APIManager.APIKey,"tags" : "cooking","per_page" : "15", "format" : "json", "nojsoncallback" : "1", "extras" : "date_taken,description,tags"]
         
         RequestsManager.sharedInstance.request(method: .get,
                                                urlString: url,

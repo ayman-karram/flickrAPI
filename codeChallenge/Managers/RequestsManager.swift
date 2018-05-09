@@ -37,21 +37,33 @@ class RequestsManager {
                                completionHandler : @escaping (Response<Any>) -> Void) {
         
         let url : URL = self.prepareURLRequest(urlString: urlString, paramters: paramters, paramtersEncoding: paramtersEncoding)!
+        //let url = URL(string: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=2ed35a9f4fda03bc96e73dbd03602780&tags=cooking&per_page=15&format=json&nojsoncallback=1&extras=date_taken,description,tags")
 
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
         
-        _ = session.dataTask(with: request) { (responseData, response, responseError) in
+        let task = session.dataTask(with: request) { (responseData, response, responseError) in
+       
             DispatchQueue.main.async {
                 if let error = responseError {
                     completionHandler(Response.failure(error))
                 } else if let jsonData = responseData {
-                    let decoder = JSONDecoder()
+                   /* let decoder = JSONDecoder()
                     do {
                         let food = try decoder.decode(reposponseModel.self, from: jsonData)
                         completionHandler(Response.success(food))
                     } catch {
                         completionHandler(Response.failure(error))
+                    } */
+                    do {
+                        if let todoJSON = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]{
+                            print(todoJSON)
+                        } else {
+                           
+                        }
+                    } catch {
+                        // error trying to convert the data to JSON using JSONSerialization.jsonObject
+                        
                     }
                 } else {
                     let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "Data was not retrieved from request"]) as Error
@@ -59,6 +71,7 @@ class RequestsManager {
                 }
             }
         }
+        task.resume()
         
     }
     
@@ -78,14 +91,17 @@ class RequestsManager {
     }
     
     private func createURL(url : String, WithComponents paramters : [String : Any]) -> URL? {
-        let urlComponents = NSURLComponents()
-        urlComponents.path = url
+        let url = URL(string: url)
+        let urlComponents = NSURLComponents(url: url!, resolvingAgainstBaseURL: false)
         // add params
+        urlComponents!.queryItems = []
         for key in paramters.keys {
             let dateQuery = URLQueryItem(name: key, value: paramters[key] as? String)
-            urlComponents.queryItems?.append(dateQuery)
+            
+            urlComponents!.queryItems?.append(dateQuery)
         }
-        return urlComponents.url
+        print(urlComponents?.query)
+        return urlComponents?.url
     }
     
 }
