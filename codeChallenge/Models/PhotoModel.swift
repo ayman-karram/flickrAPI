@@ -14,5 +14,6 @@ import Foundation
     @objc var descriptionText : String = ""
     @objc var descriptionRenderedText : NSAttributedString?
     @objc var url : String = ""
+    @objc var url_n : String = ""
 
 }

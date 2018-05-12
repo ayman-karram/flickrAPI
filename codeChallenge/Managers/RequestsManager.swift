@@ -36,7 +36,6 @@ class RequestsManager {
                                completionHandler : @escaping (Response<Any>) -> Void) {
         
         let url : URL = self.prepareURLRequest(urlString: urlString, paramters: paramters, paramtersEncoding: paramtersEncoding)!
-        //let url = URL(string: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=2ed35a9f4fda03bc96e73dbd03602780&tags=cooking&per_page=15&format=json&nojsoncallback=1&extras=date_taken,description,tags")
 
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
@@ -63,7 +62,6 @@ class RequestsManager {
             }
         }
         task.resume()
-        
     }
     
     

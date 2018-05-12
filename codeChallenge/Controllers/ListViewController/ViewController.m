@@ -11,13 +11,17 @@
 #import "codeChallenge-Swift.h"
 
 
+
 @interface ViewController ()
+
 @property (nonatomic, readwrite) PhotosResponseModel *photosResponse;
 @property (nonatomic) NSInteger pageNumber;
 @property (nonatomic, copy) void (^ reloadBlock)(void);
 @property (nonatomic) ActivityLoaderView *activityIndeicatorView;
 @property (strong, nonatomic) IBOutlet UITableView *photosTableView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *dateSegmentControl;
 @property (nonatomic) BOOL showLoadMore;
+@property (nonatomic) DSort dateSort;
 
 @end
 
@@ -38,12 +42,13 @@
 - (void) setUpUIView {
     [self setUpTableView];
     [self setUpActivityIndicatorView];
-    
+    self.title = @"Flikr";
+    self.dateSort = DSortPosted;
 }
 
 -(void) setUpTableView {
     UINib *cellNib = [UINib nibWithNibName:@"CustomCell" bundle:nil];
-    [self.tableView registerNib:cellNib forCellReuseIdentifier:@"CustomCell"];
+    [self.photosTableView registerNib:cellNib forCellReuseIdentifier:@"CustomCell"];
     [self.photosTableView addLoadMoreLoaderToFooter];
 }
 
@@ -53,7 +58,7 @@
 }
 
 - (void)reload {
-    [self.tableView reloadData];
+    [self.photosTableView reloadData];
 }
 
 -(BOOL) isLoadMoreOn {
@@ -77,26 +82,62 @@
     [self.activityIndeicatorView hide];
 }
 
+-(void) startActivityIndicator {
+    [self.photosTableView setHidden:true];
+    [self.activityIndeicatorView show];
+}
+
+-(void) hideActivityIndicator {
+    [self.activityIndeicatorView hide];
+    [self.photosTableView setHidden:false];
+}
+
+#pragma mark - Navigation Methods
+- (void) showDetailsViewControllerWith :(PhotoModel *) photoModel  {
+    DetailsViewController * detailsVC = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailsViewController"];
+    detailsVC.photoModel = photoModel;
+    [self.navigationController pushViewController:detailsVC animated:true];
+}
+
 #pragma mark - Web services Methods
 - (void)loadFlickrPhotos {
     if (![self isLoadMoreOn]) {
-        [self.activityIndeicatorView show];
+        [self startActivityIndicator];
     }
-    [APIManager.sharedInstance getFlickrPhotosWithPageNumber:self.pageNumber completionWithSuccess:^(PhotosResponseModel*  photosReponse) {
-        if ([self isLoadMoreOn]) { // Lood more reponse
-           self.photosResponse.photos =  [self.photosResponse.photos arrayByAddingObjectsFromArray:photosReponse.photos];
+    [APIManager.sharedInstance getFlickrPhotosWithPageNumber:self.pageNumber dateSort:self.dateSort completionWithSuccess:^(PhotosResponseModel*  photosReponse) {
+        if ([self isLoadMoreOn]) { // Lood more response
+            self.photosResponse.photos =  [self.photosResponse.photos arrayByAddingObjectsFromArray:photosReponse.photos];
         }
         else
         {
-           [self.activityIndeicatorView hide];
-           self.photosResponse = photosReponse;
+            [self hideActivityIndicator];
+            self.photosResponse = photosReponse;
         }
         
         [self reload];
         
     } completionWithFail:^ (NSError* error){
-        
+        [self hideActivityIndicator];
     }];
+}
+
+#pragma mark - UISegmentedControl
+- (IBAction)dateSegmentValueChnaged:(id)sender {
+    switch (self.dateSegmentControl.selectedSegmentIndex) {
+        case 0:
+            self.dateSort = DSortPosted;
+            break;
+           case 1:
+            self.dateSort = DSortTaken;
+            break;
+            case 2:
+            self.dateSort = DSortInterestingness;
+            break;
+        default:
+            break;
+    }
+    self.pageNumber = 1;
+    [self loadFlickrPhotos];
 }
 
 #pragma mark - TableViewDatasource , UITableViewDelegate
@@ -140,6 +181,11 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     return UITableViewAutomaticDimension;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    PhotoModel * photoModel = [self.photosResponse.photos objectAtIndex:indexPath.row];
+    [self showDetailsViewControllerWith:photoModel];
 }
 
 @end

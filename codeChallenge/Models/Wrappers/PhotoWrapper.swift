@@ -20,7 +20,9 @@ class PhotoWrapper {
         if let url = dict["url_t"] as? String {
             photosModel.url = url
         }
-        
+        if let url = dict["url_n"] as? String {
+            photosModel.url_n = url
+        }
         if let descriptionObject =  dict["description"] as? NSDictionary  {
             if let descriptionText = descriptionObject["_content"] as? String {
                 photosModel.descriptionText = descriptionText

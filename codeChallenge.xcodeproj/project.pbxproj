@@ -24,6 +24,7 @@
 		D338FE1920A3B34100DF2F49 /* ExtenstionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338FE1820A3B34100DF2F49 /* ExtenstionManager.swift */; };
 		D338FE1C20A45BB000DF2F49 /* ActivityLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338FE1B20A45BB000DF2F49 /* ActivityLoaderView.swift */; };
 		D338FE1E20A45BE600DF2F49 /* ActivityLoaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D338FE1D20A45BE600DF2F49 /* ActivityLoaderView.xib */; };
+		D397E6C620A7396C00392210 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D397E6C520A7396C00392210 /* DetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		D338FE1820A3B34100DF2F49 /* ExtenstionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtenstionManager.swift; sourceTree = "<group>"; };
 		D338FE1B20A45BB000DF2F49 /* ActivityLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLoaderView.swift; sourceTree = "<group>"; };
 		D338FE1D20A45BE600DF2F49 /* ActivityLoaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityLoaderView.xib; sourceTree = "<group>"; };
+		D397E6C520A7396C00392210 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				D338FE08209F45C000DF2F49 /* ListViewController */,
+				D397E6C720A74AEC00392210 /* DetailsViewController */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -170,6 +173,15 @@
 				D338FE1D20A45BE600DF2F49 /* ActivityLoaderView.xib */,
 			);
 			path = ActivityIndicator;
+			sourceTree = "<group>";
+		};
+		D397E6C720A74AEC00392210 /* DetailsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D397E6C520A7396C00392210 /* DetailsViewController.swift */,
+			);
+			name = DetailsViewController;
+			path = ListViewController/DetailsViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,6 +268,7 @@
 				D338FE1720A39FC300DF2F49 /* PhotoWrapper.swift in Sources */,
 				3E15BBE4208754FE0029597E /* AppDelegate.m in Sources */,
 				D338FE1C20A45BB000DF2F49 /* ActivityLoaderView.swift in Sources */,
+				D397E6C620A7396C00392210 /* DetailsViewController.swift in Sources */,
 				D338FE1920A3B34100DF2F49 /* ExtenstionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

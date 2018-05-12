@@ -13,7 +13,6 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    self.imageTitleCell.translatesAutoresizingMaskIntoConstraints = YES;
     self.cellContinerView.layer.cornerRadius = 8;
     self.cellContinerView.layer.masksToBounds = true;
     self.cellContinerView.layer.borderColor = [UIColor whiteColor].CGColor;

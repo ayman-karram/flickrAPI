@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 
+@objc enum DSort : Int {
+    case posted
+    case taken
+    case interestingness
+}
 
 @objc class APIManager : NSObject {
     
@@ -21,12 +26,21 @@ import UIKit
         static let photoSearch = mainURL + "/services/rest/"
     }
     
-    @objc func getFlickrPhotosWith (pageNumber : Int, completionWithSuccess:  @escaping (PhotosResponseModel) -> Void , completionWithFail : @escaping (Error) -> Void) {
+    @objc func getFlickrPhotosWith (pageNumber : Int , dateSort :DSort , completionWithSuccess:  @escaping (PhotosResponseModel) -> Void , completionWithFail : @escaping (Error) -> Void) {
      
         let url = URLS.photoSearch
         let perPage = "15"
+        var sort = ""
+        switch dateSort {
+        case .posted:
+            sort = "date-posted-asc"
+        case .taken:
+            sort = "date-taken-asc"
+        case .interestingness:
+            sort = " interestingness-asc"
+        }
         
-        let paramters = ["method":"flickr.photos.search" , "api_key" : APIManager.APIKey,"tags" : "cooking","per_page" : perPage, "page" : "\(pageNumber)", "format" : "json", "nojsoncallback" : "1", "extras" : "date_taken,description,tags,url_t"]
+        let paramters = ["method":"flickr.photos.search" , "api_key" : APIManager.APIKey,"tags" : "cooking","per_page" : perPage, "page" : "\(pageNumber)", "format" : "json", "nojsoncallback" : "1", "extras" : "date_taken,description,tags,url_t,url_n" , "sort" : sort]
         
         RequestsManager.sharedInstance.request(method: .get,
                                                urlString: url,
