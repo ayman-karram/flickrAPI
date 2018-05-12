@@ -37,7 +37,9 @@ import UIKit
         }
         self.titleLabel.text = photo.title
         self.descriptionTextView.attributedText = photo.descriptionRenderedText
+        if photo.url_n != "" {
         self.detailsImageView.downloadImageFrom(link: photo.url_n, contentMode: .scaleAspectFit)
+        }
     }
     
 }

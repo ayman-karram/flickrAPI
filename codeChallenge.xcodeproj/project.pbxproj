@@ -151,8 +151,8 @@
 		D338FE06209F458900DF2F49 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D338FE1A20A45B9700DF2F49 /* ActivityIndicator */,
 				3E15BBE8208754FE0029597E /* Main.storyboard */,
+				D338FE1A20A45B9700DF2F49 /* ActivityIndicator */,
 			);
 			path = Views;
 			sourceTree = "<group>";

@@ -36,7 +36,7 @@
 - (void) setUpUIView {
     [self setUpTableView];
     [self setUpActivityIndicatorView];
-    self.title = @"Flikr";
+    self.title = @"flickr";
     self.dateSort = DSortPosted;
 }
 
