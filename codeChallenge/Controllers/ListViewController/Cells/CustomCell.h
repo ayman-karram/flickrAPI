@@ -7,10 +7,14 @@
 //
 
 @import UIKit;
+#import "codeChallenge-Swift.h"
 
 @interface CustomCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *imageCell;
 @property (weak, nonatomic) IBOutlet UILabel *imageTitleCell;
 @property (weak, nonatomic) IBOutlet UILabel *imageSubtitleCell;
+@property (weak, nonatomic) IBOutlet UIView *cellContinerView;
+
+- (void) setUpCellWith :(PhotoModel *)photo;
 
 @end

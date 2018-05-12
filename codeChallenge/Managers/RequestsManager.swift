@@ -30,10 +30,9 @@ class RequestsManager {
     
     let session = URLSession(configuration: URLSessionConfiguration.default)
     
-    func request<T : Codable> (method : HTTPMethod, urlString : String,
+    func request (method : HTTPMethod, urlString : String,
                                paramters : [String : Any]?,
                                paramtersEncoding :EncodingParameters = .inURLQuary,
-                               reposponseModel :T.Type,
                                completionHandler : @escaping (Response<Any>) -> Void) {
         
         let url : URL = self.prepareURLRequest(urlString: urlString, paramters: paramters, paramtersEncoding: paramtersEncoding)!
@@ -48,22 +47,14 @@ class RequestsManager {
                 if let error = responseError {
                     completionHandler(Response.failure(error))
                 } else if let jsonData = responseData {
-                   /* let decoder = JSONDecoder()
-                    do {
-                        let food = try decoder.decode(reposponseModel.self, from: jsonData)
-                        completionHandler(Response.success(food))
-                    } catch {
-                        completionHandler(Response.failure(error))
-                    } */
-                    do {
-                        if let todoJSON = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]{
-                            print(todoJSON)
-                        } else {
-                           
-                        }
+                   do {
+                        let JSON = try JSONSerialization.jsonObject(with: jsonData, options: [])
+                        print(JSON)
+                        completionHandler(Response.success(JSON))
+                    
                     } catch {
                         // error trying to convert the data to JSON using JSONSerialization.jsonObject
-                        
+                        completionHandler(Response.failure(error))
                     }
                 } else {
                     let error = NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey : "Data was not retrieved from request"]) as Error
@@ -93,14 +84,12 @@ class RequestsManager {
     private func createURL(url : String, WithComponents paramters : [String : Any]) -> URL? {
         let url = URL(string: url)
         let urlComponents = NSURLComponents(url: url!, resolvingAgainstBaseURL: false)
-        // add params
-        urlComponents!.queryItems = []
+        urlComponents?.queryItems = []
         for key in paramters.keys {
             let dateQuery = URLQueryItem(name: key, value: paramters[key] as? String)
             
-            urlComponents!.queryItems?.append(dateQuery)
+            urlComponents?.queryItems?.append(dateQuery)
         }
-        print(urlComponents?.query)
         return urlComponents?.url
     }
     

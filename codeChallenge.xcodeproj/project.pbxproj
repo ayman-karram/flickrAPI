@@ -17,7 +17,13 @@
 		3E15BBFC20879B4B0029597E /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E15BBFB20879B4B0029597E /* CustomCell.xib */; };
 		5E139AEA20A0AE3400F14143 /* RequestsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E139AE920A0AE3400F14143 /* RequestsManager.swift */; };
 		D338FE0D209F51C800DF2F49 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338FE0C209F51C800DF2F49 /* APIManager.swift */; };
-		D338FE10209F751000DF2F49 /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338FE0F209F751000DF2F49 /* FoodModel.swift */; };
+		D338FE10209F751000DF2F49 /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338FE0F209F751000DF2F49 /* PhotoModel.swift */; };
+		D338FE1220A38F3000DF2F49 /* PhotosResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338FE1120A38F3000DF2F49 /* PhotosResponseModel.swift */; };
+		D338FE1520A39EEB00DF2F49 /* PhotosResponseModelWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338FE1420A39EEB00DF2F49 /* PhotosResponseModelWrapper.swift */; };
+		D338FE1720A39FC300DF2F49 /* PhotoWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338FE1620A39FC300DF2F49 /* PhotoWrapper.swift */; };
+		D338FE1920A3B34100DF2F49 /* ExtenstionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338FE1820A3B34100DF2F49 /* ExtenstionManager.swift */; };
+		D338FE1C20A45BB000DF2F49 /* ActivityLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D338FE1B20A45BB000DF2F49 /* ActivityLoaderView.swift */; };
+		D338FE1E20A45BE600DF2F49 /* ActivityLoaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D338FE1D20A45BE600DF2F49 /* ActivityLoaderView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +43,13 @@
 		5E139AE920A0AE3400F14143 /* RequestsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsManager.swift; sourceTree = "<group>"; };
 		D338FE0B209F51C700DF2F49 /* codeChallenge-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "codeChallenge-Bridging-Header.h"; sourceTree = "<group>"; };
 		D338FE0C209F51C800DF2F49 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
-		D338FE0F209F751000DF2F49 /* FoodModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
+		D338FE0F209F751000DF2F49 /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
+		D338FE1120A38F3000DF2F49 /* PhotosResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosResponseModel.swift; sourceTree = "<group>"; };
+		D338FE1420A39EEB00DF2F49 /* PhotosResponseModelWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosResponseModelWrapper.swift; sourceTree = "<group>"; };
+		D338FE1620A39FC300DF2F49 /* PhotoWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoWrapper.swift; sourceTree = "<group>"; };
+		D338FE1820A3B34100DF2F49 /* ExtenstionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtenstionManager.swift; sourceTree = "<group>"; };
+		D338FE1B20A45BB000DF2F49 /* ActivityLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLoaderView.swift; sourceTree = "<group>"; };
+		D338FE1D20A45BE600DF2F49 /* ActivityLoaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityLoaderView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +107,9 @@
 		D338FE05209F458300DF2F49 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				D338FE0F209F751000DF2F49 /* FoodModel.swift */,
+				D338FE1120A38F3000DF2F49 /* PhotosResponseModel.swift */,
+				D338FE0F209F751000DF2F49 /* PhotoModel.swift */,
+				D338FE1320A39ED100DF2F49 /* Wrappers */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -103,6 +117,7 @@
 		D338FE06209F458900DF2F49 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D338FE1A20A45B9700DF2F49 /* ActivityIndicator */,
 				3E15BBE8208754FE0029597E /* Main.storyboard */,
 			);
 			path = Views;
@@ -133,9 +148,28 @@
 			children = (
 				D338FE0C209F51C800DF2F49 /* APIManager.swift */,
 				5E139AE920A0AE3400F14143 /* RequestsManager.swift */,
+				D338FE1820A3B34100DF2F49 /* ExtenstionManager.swift */,
 				D338FE0B209F51C700DF2F49 /* codeChallenge-Bridging-Header.h */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		D338FE1320A39ED100DF2F49 /* Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				D338FE1420A39EEB00DF2F49 /* PhotosResponseModelWrapper.swift */,
+				D338FE1620A39FC300DF2F49 /* PhotoWrapper.swift */,
+			);
+			path = Wrappers;
+			sourceTree = "<group>";
+		};
+		D338FE1A20A45B9700DF2F49 /* ActivityIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				D338FE1B20A45BB000DF2F49 /* ActivityLoaderView.swift */,
+				D338FE1D20A45BE600DF2F49 /* ActivityLoaderView.xib */,
+			);
+			path = ActivityIndicator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,6 +232,7 @@
 			files = (
 				3E15BBEF208754FE0029597E /* LaunchScreen.storyboard in Resources */,
 				3E15BBEC208754FE0029597E /* Assets.xcassets in Resources */,
+				D338FE1E20A45BE600DF2F49 /* ActivityLoaderView.xib in Resources */,
 				3E15BBFC20879B4B0029597E /* CustomCell.xib in Resources */,
 				3E15BBEA208754FE0029597E /* Main.storyboard in Resources */,
 			);
@@ -210,13 +245,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D338FE1520A39EEB00DF2F49 /* PhotosResponseModelWrapper.swift in Sources */,
 				3E15BBE7208754FE0029597E /* ViewController.m in Sources */,
 				3E15BBF2208754FE0029597E /* main.m in Sources */,
 				D338FE0D209F51C800DF2F49 /* APIManager.swift in Sources */,
-				D338FE10209F751000DF2F49 /* FoodModel.swift in Sources */,
+				D338FE10209F751000DF2F49 /* PhotoModel.swift in Sources */,
 				5E139AEA20A0AE3400F14143 /* RequestsManager.swift in Sources */,
+				D338FE1220A38F3000DF2F49 /* PhotosResponseModel.swift in Sources */,
 				3E15BBFA208774B10029597E /* CustomCell.m in Sources */,
+				D338FE1720A39FC300DF2F49 /* PhotoWrapper.swift in Sources */,
 				3E15BBE4208754FE0029597E /* AppDelegate.m in Sources */,
+				D338FE1C20A45BB000DF2F49 /* ActivityLoaderView.swift in Sources */,
+				D338FE1920A3B34100DF2F49 /* ExtenstionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,8 +399,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 56ETNADXPZ;
+				DEVELOPMENT_TEAM = 8ESNJQL58U;
 				INFOPLIST_FILE = codeChallenge/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -381,8 +422,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 56ETNADXPZ;
+				DEVELOPMENT_TEAM = 8ESNJQL58U;
 				INFOPLIST_FILE = codeChallenge/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

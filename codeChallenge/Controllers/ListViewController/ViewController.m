@@ -10,94 +10,136 @@
 #import "CustomCell.h"
 #import "codeChallenge-Swift.h"
 
-NSString *const FlickrAPIKey = @"2ed35a9f4fda03bc96e73dbd03602780";
-
 
 @interface ViewController ()
-@property (nonatomic, readwrite) NSArray *photos;
-@property (nonatomic) NSInteger imagePageOffset;
+@property (nonatomic, readwrite) PhotosResponseModel *photosResponse;
+@property (nonatomic) NSInteger pageNumber;
 @property (nonatomic, copy) void (^ reloadBlock)(void);
+@property (nonatomic) ActivityLoaderView *activityIndeicatorView;
+@property (strong, nonatomic) IBOutlet UITableView *photosTableView;
+@property (nonatomic) BOOL showLoadMore;
 
 @end
 
 @implementation ViewController
 
+#pragma mark - View Life Cycle
 - (void)viewDidLoad {
-    self.imagePageOffset = 1;
+    [self setUpUIView];
+    [self InitVariables];
     [self loadFlickrPhotos];
-    
-    UINib *cellNib = [UINib nibWithNibName:@"CustomCell" bundle:nil];
-    [self.tableView registerNib:cellNib forCellReuseIdentifier:@"CustomCell"];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     
 }
 
-
-
-//TableViewDatasource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.photos.count;
+#pragma mark - Helper Methods
+- (void) setUpUIView {
+    [self setUpTableView];
+    [self setUpActivityIndicatorView];
+    
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *identifier = @"CustomCell";
-    
-     CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    
-    if (cell == nil) {
-        cell = [[CustomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-    }
-    
-    
-    cell.imageTitleCell.text = [[self.photos objectAtIndex:indexPath.row] objectForKey:@"title"];
-    cell.imageSubtitleCell.text = [[[self.photos objectAtIndex:indexPath.row] objectForKey:@"description"] objectForKey:@"_content"];;
-
-    return cell;
+-(void) setUpTableView {
+    UINib *cellNib = [UINib nibWithNibName:@"CustomCell" bundle:nil];
+    [self.tableView registerNib:cellNib forCellReuseIdentifier:@"CustomCell"];
+    [self.photosTableView addLoadMoreLoaderToFooter];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath  {
-    return 98;
+-(void)InitVariables {
+    self.pageNumber = 1;
+    self.showLoadMore = false;
 }
 
 - (void)reload {
-     [self.tableView reloadData];
+    [self.tableView reloadData];
 }
 
+-(BOOL) isLoadMoreOn {
+    if (self.pageNumber > 1) {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+- (void) setUpActivityIndicatorView {
+    CGRect tableViewFrame = self.photosTableView.frame;
+    CGFloat xPosition = tableViewFrame.origin.x;
+    CGFloat yPosition = tableViewFrame.origin.y;
+    CGFloat width = tableViewFrame.size.width;
+    CGRect frame = CGRectMake(xPosition, yPosition, width, 35);
+    self.activityIndeicatorView  = [[ActivityLoaderView alloc] initWithFrame:frame];
+    [self.view addSubview:self.activityIndeicatorView];
+    [self.activityIndeicatorView hide];
+}
+
+#pragma mark - Web services Methods
 - (void)loadFlickrPhotos {
-    NSString *urlString = [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&per_page=15&format=json&nojsoncallback=1&extras=date_taken,description,tags", FlickrAPIKey, @"cooking"];
-    NSLog(@"%@", urlString);
-    
-//    NSURL *URL = [NSURL URLWithString:urlString];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-//    NSURLResponse *response = nil;
-//    NSError *error = nil;
-//
-//    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-//
-//    if (!error) {
-//        NSDictionary *photosDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-//        self.photos = [[photosDictionary objectForKey:@"photos"] objectForKey:@"photo"];
-//
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.tableView reloadData];
-//        });
-//    }
-    
-    
-    //[APIManager.sharedInstance getFlickrPhotosWithCompletionWithSuccess:^(NSArray<FoodModel *> _Nonnull) completionWithFail:<#^(NSError * _Nonnull)completionWithFail#>]
-    
-    [APIManager.sharedInstance getFlickrPhotosWithCompletionWithSuccess:^(NSArray<FoodModel *>* food) {
+    if (![self isLoadMoreOn]) {
+        [self.activityIndeicatorView show];
+    }
+    [APIManager.sharedInstance getFlickrPhotosWithPageNumber:self.pageNumber completionWithSuccess:^(PhotosResponseModel*  photosReponse) {
+        if ([self isLoadMoreOn]) { // Lood more reponse
+           self.photosResponse.photos =  [self.photosResponse.photos arrayByAddingObjectsFromArray:photosReponse.photos];
+        }
+        else
+        {
+           [self.activityIndeicatorView hide];
+           self.photosResponse = photosReponse;
+        }
+        
+        [self reload];
         
     } completionWithFail:^ (NSError* error){
         
     }];
 }
 
+#pragma mark - TableViewDatasource , UITableViewDelegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.photosResponse.photos count];
+}
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *identifier = @"CustomCell";
+    
+    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    if (cell == nil) {
+        cell = [[CustomCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    [cell setUpCellWith: [self.photosResponse.photos objectAtIndex:indexPath.row]];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == [self.photosResponse.photos count] -1)  {
+        if (self.showLoadMore){
+            [self.photosTableView starLoadMoreIndicator];
+            self.pageNumber +=1;
+            [self loadFlickrPhotos];
+        }
+        else
+        {
+            self.showLoadMore = true;
+        }
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return UITableViewAutomaticDimension;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return UITableViewAutomaticDimension;
+}
 
 @end
