@@ -8,6 +8,14 @@
 
 import Foundation
 
+/**
+ Wrape JSON response data to PhotosResponseModel
+ 
+ - parameter dict JSON data dictionary
+ 
+ - returns: PhotosResponseModel
+ 
+ */
 class PhotosResponseModelWrapper {
     class func wrapeJSONDataToPhotosResponseModel (dict: [String: AnyObject]) -> PhotosResponseModel {
         

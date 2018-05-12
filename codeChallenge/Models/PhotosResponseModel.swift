@@ -16,5 +16,4 @@ import Foundation
     @objc var total: Int = 0
     @objc var photos : [PhotoModel] = []
 
-    
 }

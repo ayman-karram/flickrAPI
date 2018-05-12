@@ -48,7 +48,6 @@ class RequestsManager {
                 } else if let jsonData = responseData {
                    do {
                         let JSON = try JSONSerialization.jsonObject(with: jsonData, options: [])
-                        print(JSON)
                         completionHandler(Response.success(JSON))
                     
                     } catch {
@@ -79,6 +78,15 @@ class RequestsManager {
         
     }
     
+    /**
+     Create get quary URL ex : https://api.flickr.com/services/rest/?method=flickr.photos.search&
+     
+     - parameter url base URl
+     - paramters quary parameters ex: [method : flickr.photos.search]
+
+     - returns: URL with get query
+     
+     */
     private func createURL(url : String, WithComponents paramters : [String : Any]) -> URL? {
         let url = URL(string: url)
         let urlComponents = NSURLComponents(url: url!, resolvingAgainstBaseURL: false)

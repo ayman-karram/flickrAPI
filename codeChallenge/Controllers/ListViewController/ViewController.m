@@ -16,11 +16,9 @@
 
 @property (nonatomic, readwrite) PhotosResponseModel *photosResponse;
 @property (nonatomic) NSInteger pageNumber;
-@property (nonatomic, copy) void (^ reloadBlock)(void);
 @property (nonatomic) ActivityLoaderView *activityIndeicatorView;
 @property (strong, nonatomic) IBOutlet UITableView *photosTableView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *dateSegmentControl;
-@property (nonatomic) BOOL showLoadMore;
 @property (nonatomic) DSort dateSort;
 
 @end
@@ -32,10 +30,6 @@
     [self setUpUIView];
     [self InitVariables];
     [self loadFlickrPhotos];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    
 }
 
 #pragma mark - Helper Methods
@@ -54,13 +48,15 @@
 
 -(void)InitVariables {
     self.pageNumber = 1;
-    self.showLoadMore = false;
 }
 
 - (void)reload {
     [self.photosTableView reloadData];
 }
 
+/**
+ Check if this is first page to load or load more data self.pageNumber > 1
+ */
 -(BOOL) isLoadMoreOn {
     if (self.pageNumber > 1) {
         return true;
@@ -71,6 +67,9 @@
     }
 }
 
+/**
+ Set Activity indicator fram according to table view fram and added to the table
+ */
 - (void) setUpActivityIndicatorView {
     CGRect tableViewFrame = self.photosTableView.frame;
     CGFloat xPosition = tableViewFrame.origin.x;
@@ -108,7 +107,7 @@
         if ([self isLoadMoreOn]) { // Lood more response
             self.photosResponse.photos =  [self.photosResponse.photos arrayByAddingObjectsFromArray:photosReponse.photos];
         }
-        else
+        else // first page response
         {
             [self hideActivityIndicator];
             self.photosResponse = photosReponse;
@@ -118,6 +117,8 @@
         
     } completionWithFail:^ (NSError* error){
         [self hideActivityIndicator];
+        UIAlertController *alert = [ALertManager somethingWentWrongAlert];
+        [self presentViewController:alert animated:true completion:nil];
     }];
 }
 
@@ -127,10 +128,10 @@
         case 0:
             self.dateSort = DSortPosted;
             break;
-           case 1:
+        case 1:
             self.dateSort = DSortTaken;
             break;
-            case 2:
+        case 2:
             self.dateSort = DSortInterestingness;
             break;
         default:
@@ -160,16 +161,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == [self.photosResponse.photos count] -1)  {
-        if (self.showLoadMore){
-            [self.photosTableView starLoadMoreIndicator];
-            self.pageNumber +=1;
-            [self loadFlickrPhotos];
-        }
-        else
-        {
-            self.showLoadMore = true;
-        }
+    if (indexPath.row == [self.photosResponse.photos count] -1)  { // Load more data
+        [self.photosTableView starLoadMoreIndicator];
+        self.pageNumber +=1;
+        [self loadFlickrPhotos];
     }
 }
 

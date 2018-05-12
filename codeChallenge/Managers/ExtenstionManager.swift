@@ -34,7 +34,10 @@ extension UIImageView {
 
 extension UITableView {
     
-   @objc func addLoadMoreLoaderToFooter() {
+    /**
+     Add loader to table view footer to use it as load more date indicator
+     */
+    @objc func addLoadMoreLoaderToFooter() {
         let tableViewFrame = self.frame
         let xPosition : CGFloat = 0
         let yPosition : CGFloat = 0
@@ -46,7 +49,7 @@ extension UITableView {
         
     }
     
-   @objc func starLoadMoreIndicator() {
+    @objc func starLoadMoreIndicator() {
         if let loadMoreView = self.tableFooterView as? ActivityLoaderView {
             self.tableFooterView?.isHidden = false
             loadMoreView.activityIndicator.startAnimating()
